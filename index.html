@@ -888,13 +888,115 @@
       </div>
     </section>
 
+    <div style="text-align: center; margin-top: 10px; margin-bottom: 20px;">
+
+      <h2 class="section-heading">Mainan Kecil Nih "Wajib Pake Laptop"</h2>
+
+      <!-- Canvas Diperbesar ke 200px & Margin Bawah Cuma -15px Biar Deket Tombol -->
+      <div id="uranus-container" style="width: 200px; height: 200px; margin: 0 auto 10px auto; position: relative;">
+        <canvas id="uranusCanvas" style="width: 100%; height: 100%; display: block;"></canvas>
+      </div>
+
+      <!-- Tombol Kamu -->
+      <button onclick="window.location.href='hand.html'" class="shake-btn">
+        Handcam Cobain Deh
+      </button>
+    </div>
+
     <footer>dibuat khusus untukmu (●'◡'●)</footer>
   </div>
 </div>
 
 <div class="toast" id="toast"></div>
 
+<!-- Load Three.js dari CDN -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+
 <script>
+
+  // Jumlah partikel disesuaikan agar ringan di area kecil
+  const PARTICLE_COUNT = 3000;
+
+  // Function Posisi Uranus Milikmu
+  function getUranusPositions() {
+    const pos = new Float32Array(PARTICLE_COUNT * 3);
+    for (let i = 0; i < PARTICLE_COUNT; i++) {
+      if (i < PARTICLE_COUNT * 0.45) {
+        const u = Math.random() * Math.PI * 2;
+        const v = Math.random() * Math.PI;
+        const r = 2.5;
+        pos[i * 3] = r * Math.sin(v) * Math.cos(u);
+        pos[i * 3 + 1] = r * Math.sin(v) * Math.sin(u);
+        pos[i * 3 + 2] = r * Math.cos(v);
+      } else {
+        const theta = Math.random() * Math.PI * 2;
+        const r = 3.8 + Math.random() * 2.8;
+        pos[i * 3] = r * Math.cos(theta);
+        pos[i * 3 + 1] = (Math.random() - 0.5) * 0.25;
+        pos[i * 3 + 2] = r * Math.sin(theta);
+      }
+    }
+    return pos;
+  }
+
+  // Function Warna Uranus Milikmu
+  function getUranusColors() {
+    const col = new Float32Array(PARTICLE_COUNT * 3);
+    for (let i = 0; i < PARTICLE_COUNT; i++) {
+      if (i < PARTICLE_COUNT * 0.45) {
+        col[i * 3] = 0.35 + Math.random() * 0.15;
+        col[i * 3 + 1] = 0.85 + Math.random() * 0.15;
+        col[i * 3 + 2] = 0.9 + Math.random() * 0.1;
+      } else {
+        col[i * 3] = 0.25 + Math.random() * 0.15;
+        col[i * 3 + 1] = 0.75 + Math.random() * 0.2;
+        col[i * 3 + 2] = 0.85 + Math.random() * 0.15;
+      }
+    }
+    return col;
+  }
+
+  // --- Setup Scene Three.js ---
+  const container = document.getElementById('uranus-container');
+  const canvas = document.getElementById('uranusCanvas');
+
+  const scene = new THREE.Scene();
+  const camera = new THREE.PerspectiveCamera(45, 1, 0.1, 1000);
+  camera.position.z = 16; // Jarak kamera ke planet
+
+  const renderer = new THREE.WebGLRenderer({ canvas: canvas, alpha: true, antialias: true });
+  renderer.setSize(200, 200);
+  renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+
+  // Buat Geometri Partikel
+  const geometry = new THREE.BufferGeometry();
+  geometry.setAttribute('position', new THREE.BufferAttribute(getUranusPositions(), 3));
+  geometry.setAttribute('color', new THREE.BufferAttribute(getUranusColors(), 3));
+
+  // Material Partikel Glow Cyan
+  const material = new THREE.PointsMaterial({
+    size: 0.12,
+    vertexColors: true,
+    transparent: true,
+    opacity: 0.85,
+    blending: THREE.AdditiveBlending
+  });
+
+  const uranusParticles = new THREE.Points(geometry, material);
+  
+  // Kemiringan Khas Cincin Uranus (Cincin Hampir Vertikal)
+  uranusParticles.rotation.z = Math.PI / 4; 
+  scene.add(uranusParticles);
+
+  // Animation Loop (Rotasi Pelan)
+  function animate() {
+    requestAnimationFrame(animate);
+    uranusParticles.rotation.y += 0.005; // Rotasi planet & cincin
+    renderer.render(scene, camera);
+  }
+
+  animate();
+
   const SECRET_CODE = "2610";
 
   const TRACKS = [
