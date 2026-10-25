@@ -1008,50 +1008,72 @@
         0% { transform: translateY(0); }
         100% { transform: translateY(-6px); }
     }
-    /* FIX SPACING KHUSUS HP */
-    @media (max-width: 600px) {
+    /* RESPONSIVE FIX: rapikan jarak section di HP */
+    @media screen and (max-width: 600px) {
+      /* Default section terlalu renggang di layar kecil */
+      section {
+        padding: 32px 20px;
+      }
+
       .hero {
         padding-top: 48px;
+        padding-bottom: 28px;
       }
 
       .divider {
-        margin: 16px auto;
+        margin: 14px auto;
       }
 
       .cake-container {
         margin: 20px auto;
       }
 
-      .flowers {
-        padding: 0 20px;
+      /* Bunga dibuat rapat dan tidak menambah ruang vertikal */
+      section.flowers {
+        padding: 8px 20px 12px;
+        margin-top: 0;
+        margin-bottom: 0;
+      }
+
+      .bouquet-wrap {
+        gap: 0;
+        margin: 0;
+        padding: 0;
       }
 
       .bouquet-svg {
+        display: block;
         width: 160px;
+        max-width: 80vw;
+        height: auto;
       }
 
       .bouquet-caption {
         margin-top: 8px;
       }
 
-      .section-sub {
-        margin-bottom: 20px;
-      }
-    }
-
-    /* FIX JARAK ANTARBAGIAN DI HP */
-    @media (max-width: 600px) {
-      .flowers {
-        padding-top: 0;
-        padding-bottom: 0;
-      }
-
-      .letter {
-        padding-top: 16px;
-        padding-bottom: 40px;
+      /* Surat dimulai lebih dekat dengan bunga */
+      section.letter {
+        padding-top: 12px;
+        padding-bottom: 32px;
+        margin-top: 0;
       }
 
       .section-heading {
         margin-top: 0;
+        margin-bottom: 6px;
+      }
+
+      .section-sub {
+        margin-bottom: 20px;
+      }
+
+      .letter-body {
+        padding: 22px 18px;
+        overflow-wrap: anywhere;
+      }
+
+      .polaroid-container {
+        margin: 20px auto;
       }
     }
