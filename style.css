@@ -391,32 +391,6 @@
       to { opacity: 1; }
     }
 
-    @media (max-width: 600px) {
-      .flowers {
-        padding-top: 0;
-        padding-bottom: 0;
-        margin-top: 0;
-        margin-bottom: 0;
-      }
-
-      .bouquet-wrap {
-        gap: 0;
-        margin: 0;
-        padding: 0;
-      }
-
-      .bouquet-svg {
-        display: block;
-        width: 160px;
-        max-width: 80vw;
-        height: auto;
-      }
-
-      .bouquet-caption {
-        margin-top: 8px;
-      }
-    }
-
     /* Letter */
     .letter {
       text-align: left;
@@ -1062,5 +1036,22 @@
 
       .section-sub {
         margin-bottom: 20px;
+      }
+    }
+
+    /* FIX JARAK ANTARBAGIAN DI HP */
+    @media (max-width: 600px) {
+      .flowers {
+        padding-top: 0;
+        padding-bottom: 0;
+      }
+
+      .letter {
+        padding-top: 16px;
+        padding-bottom: 40px;
+      }
+
+      .section-heading {
+        margin-top: 0;
       }
     }
