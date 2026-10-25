@@ -146,6 +146,16 @@ function triggerCornerConfetti() {
     return col;
   }
 
+  function replyWhatsApp(section) {
+    const nomorWA = "62895327994877"; // Ganti dengan nomor WA lu
+
+    const pesan = `Bales ${section}:\n[isi disini]`;
+
+    const url = `https://wa.me/${nomorWA}?text=${encodeURIComponent(pesan)}`;
+
+    window.open(url, "_blank");
+  }
+
   // --- Setup Scene Three.js ---
   const container = document.getElementById('uranus-container');
   const canvas = document.getElementById('uranusCanvas');

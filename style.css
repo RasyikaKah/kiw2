@@ -1008,6 +1008,26 @@
         0% { transform: translateY(0); }
         100% { transform: translateY(-6px); }
     }
+
+    .reply-btn {
+      display: block;
+      margin: 24px auto 0;
+      padding: 12px 24px;
+      border: 1px solid var(--accent);
+      border-radius: 999px;
+      background: transparent;
+      color: var(--accent);
+      font-family: var(--sans);
+      font-size: 0.9rem;
+      cursor: pointer;
+      transition: background 0.2s ease, color 0.2s ease;
+    }
+
+    .reply-btn:hover {
+      background: var(--accent);
+      color: var(--bg);
+    }
+
     /* RESPONSIVE FIX: rapikan jarak section di HP */
     @media screen and (max-width: 600px) {
       /* Default section terlalu renggang di layar kecil */
