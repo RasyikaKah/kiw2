@@ -4,715 +4,11 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
   <title>Untuk Kamu 🕯️</title>
+  <link rel="stylesheet" href="style.css">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,500&family=Jost:wght@300;400;500&display=swap" rel="stylesheet">
-  
-  <style>
-    :root {
-      /* Background Biru Midnight */
-      --bg: #0b131e;
-      --bg-soft: #121d2b;
-      --panel: #142132;
-      --paneldelete: #be2828;
-      --panelconfirm: #26ba26;
-      
-      /* Teks Utama & Muted (Dibuat Lebih Terang) */
-      --text: #f8fafc;
-      --text-muted: #94a3b8;
-      
-      /* Aksen Biru Soft / Sky Blue (Kontras & Sangat Jelas) */
-      --accent: #7dd3fc; 
 
-      --bg-gradient:
-        linear-gradient(135deg, transparent 0%, transparent 35%, rgba(56, 189, 248, 0.25) 50%, transparent 65%, transparent 100%),
-        linear-gradient(320deg, #1e293b 5%, #0f172a 40%, #020617 100%);
-
-      --accent-dim: rgba(125, 211, 252, 0.2);
-      --border: rgba(226, 232, 240, 0.15);
-      --serif: 'Cormorant Garamond', serif;
-      --sans: 'Jost', sans-serif;
-    }
-
-    * {
-      box-sizing: border-box;
-    }
-
-    html, body {
-      margin: 0;
-      padding: 0;
-    }
-
-    body {
-      background: var(--bg-gradient);
-      color: var(--text);
-      font-family: var(--sans);
-      font-weight: 300;
-      overflow-x: hidden;
-      min-height: 100vh;
-    }
-
-    ::selection {
-      background: var(--accent-dim);
-      color: var(--accent);
-    }
-
-    .stage {
-      max-width: 480px;
-      margin: 0 auto;
-      position: relative;
-      min-height: 100vh;
-    }
-
-    .stage::before {
-      content: "";
-      position: fixed;
-      inset: 0;
-      pointer-events: none;
-      background: radial-gradient(ellipse at 50% 0%, rgba(201, 162, 76, 0.06), transparent 60%);
-      z-index: 0;
-    }
-
-    .ornament {
-      font-family: var(--serif);
-      font-style: italic;
-      color: var(--accent);
-      font-size: 1.6rem;
-      line-height: 1;
-    }
-
-    .divider {
-      width: 40px;
-      height: 1px;
-      background: var(--border);
-      margin: 28px auto;
-      position: relative;
-    }
-
-    .divider::after {
-      content: "";
-      position: absolute;
-      left: 50%;
-      top: 50%;
-      width: 5px;
-      height: 5px;
-      border-radius: 50%;
-      background: var(--accent);
-      transform: translate(-50%, -50%);
-    }
-
-    /* LOCK SCREEN */
-    #lock-screen {
-      position: fixed;
-      inset: 0;
-      z-index: 50;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      background: var(--bg-gradient);
-      transition: opacity 0.9s ease, visibility 0.9s ease;
-    }
-
-    #lock-screen.hidden {
-      opacity: 0;
-      visibility: hidden;
-      pointer-events: none;
-    }
-
-    .lock-card {
-      width: 100%;
-      max-width: 320px;
-      padding: 0 32px;
-      text-align: center;
-    }
-
-    .lock-title {
-      font-family: var(--serif);
-      font-size: 1.9rem;
-      font-weight: 500;
-      margin: 18px 0 4px;
-    }
-
-    .lock-sub {
-      color: var(--text-muted);
-      font-size: 0.82rem;
-      letter-spacing: 0.02em;
-      margin-bottom: 26px;
-    }
-
-    .dots {
-      display: flex;
-      justify-content: center;
-      gap: 12px;
-      margin-bottom: 30px;
-    }
-
-    .dot {
-      width: 11px;
-      height: 11px;
-      border-radius: 50%;
-      border: 1px solid var(--border);
-      transition: background 0.2s ease, border-color 0.2s ease, transform 0.2s ease;
-    }
-
-    .dot.filled {
-      background: var(--accent);
-      border-color: var(--accent);
-      transform: scale(1.1);
-    }
-
-    .dots.error .dot {
-      border-color: #a15353;
-    }
-
-    .keypad {
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 12px;
-      margin-bottom: 20px;
-    }
-
-    .key {
-      aspect-ratio: 1;
-      border-radius: 14px;
-      border: 1px solid var(--border);
-      background: var(--panel);
-      color: var(--text);
-      font-family: var(--serif);
-      font-size: 1.3rem;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      cursor: pointer;
-      transition: border-color 0.15s ease, transform 0.08s ease;
-    }
-
-    .key:active {
-      transform: scale(0.94);
-    }
-
-    .key:hover {
-      border-color: var(--accent);
-    }
-
-    .key.ghost {
-      background: var(--paneldelete);
-      border: 1px solid var(--border);
-      color: var(--text);
-      font-family: var(--serif);
-      font-size: 1rem;
-    }
-
-    .key.haunt {
-      background: var(--panelconfirm);
-      border: 1px solid var(--border);
-      color: var(--text);
-      font-family: var(--serif);
-      font-size: 1.25rem;
-    }
-
-    .hint {
-      color: var(--text-muted);
-      font-size: 0.78rem;
-      letter-spacing: 0.02em;
-    }
-
-    .hint b {
-      color: var(--accent);
-      font-weight: 500;
-    }
-
-    @keyframes shake {
-      10%, 90% { transform: translateX(-2px); }
-      20%, 80% { transform: translateX(4px); }
-      30%, 50%, 70% { transform: translateX(-8px); }
-      40%, 60% { transform: translateX(8px); }
-    }
-
-    .shake {
-      animation: shake 0.5s;
-    }
-
-    /* MAIN SITE */
-    #site {
-      position: relative;
-      z-index: 1;
-      opacity: 0;
-      transition: opacity 1s ease;
-    }
-
-    #site.visible {
-      opacity: 1;
-    }
-
-    section {
-      padding: 72px 32px;
-      text-align: center;
-      opacity: 0;
-      transform: translateY(14px);
-      transition: opacity 0.8s ease, transform 0.8s ease;
-    }
-
-    section.in-view {
-      opacity: 1;
-      transform: translateY(0);
-    }
-
-    .hero {
-      padding-top: 96px;
-    }
-
-    .eyebrow-icon {
-      font-size: 1.4rem;
-    }
-
-    .hero h1 {
-      font-family: var(--serif);
-      font-weight: 500;
-      font-size: 2.6rem;
-      line-height: 1.15;
-      margin: 14px 0 6px;
-    }
-
-    .hero h1 em {
-      font-style: italic;
-      color: var(--accent);
-    }
-
-    .hero-name {
-      display: block;
-      font-size: 2.9rem;
-    }
-
-    .hero-date {
-      color: var(--text-muted);
-      font-size: 0.85rem;
-      margin-top: 18px;
-    }
-
-    .hero-quote {
-      font-family: var(--serif);
-      font-style: italic;
-      font-size: 1.15rem;
-      color: var(--text);
-      margin-top: 22px;
-      line-height: 1.5;
-    }
-
-    /* FLOWER BOUQUET */
-    .flowers {
-      padding-top: 10px;
-      padding-bottom: 10px;
-    }
-
-    .flower ellipse {
-      fill: #f472b6; /* Warna Pink Soft */
-    }
-
-    .bouquet-wrap {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-    }
-
-    .bouquet-svg {
-      width: 190px;
-      height: auto;
-      overflow: visible;
-      filter: drop-shadow(0 0 12px rgba(224, 212, 76, 0.35));
-    }
-
-    .stem {
-      fill: none;
-      stroke: var(--accent);
-      stroke-width: 2;
-      stroke-linecap: round;
-      stroke-dasharray: 140;
-      stroke-dashoffset: 140;
-      animation: bq-draw 1.3s ease forwards;
-    }
-
-    .stem2 { animation-delay: .15s; }
-    .stem3 { animation-delay: .3s; }
-
-    @keyframes bq-draw {
-      to { stroke-dashoffset: 0; }
-    }
-
-    .leaf {
-      fill: var(--accent);
-      opacity: 0;
-      transform-origin: center;
-      animation: bq-leaf .6s ease forwards;
-    }
-
-    .leaf1 { animation-delay: .9s; }
-    .leaf2 { animation-delay: 1.05s; }
-    .leaf3 { animation-delay: 1.2s; }
-    .leaf4 { animation-delay: 1.35s; }
-
-    @keyframes bq-leaf {
-      from { opacity: 0; transform: scale(.4); }
-      to { opacity: .85; transform: scale(1); }
-    }
-
-    /* FIX ANIMASI BUNGA: Animasi diatur via opacity & scale tanpa merusak transform SVG */
-    .flower {
-      opacity: 0;
-      animation: bq-bloom .7s cubic-bezier(.34, 1.56, .64, 1) forwards;
-    }
-
-    .flower1 { animation-delay: 1.5s; }
-    .flower2 { animation-delay: 1.7s; }
-    .flower3 { animation-delay: 1.9s; }
-
-    @keyframes bq-bloom {
-      from { opacity: 0; }
-      to { opacity: 1; }
-    }
-
-    .spark {
-      fill: #f472b6; /* Warna Pink Soft serasi dengan bunga */
-      opacity: 0;
-      animation: bq-spark 2.6s ease-in-out infinite;
-    }
-
-    .spark1 { animation-delay: 2.2s; }
-    .spark2 { animation-delay: 2.6s; }
-    .spark3 { animation-delay: 2.4s; }
-    .spark4 { animation-delay: 2.9s; }
-    .spark5 { animation-delay: 2.1s; }
-
-    @keyframes bq-spark {
-      0%, 100% { opacity: 0; transform: translateY(0); }
-      50% { opacity: 1; transform: translateY(-8px); }
-    }
-
-    .bouquet-caption {
-      margin-top: 14px;
-      font-family: var(--serif);
-      font-style: italic;
-      color: var(--accent);
-      font-size: 1rem;
-      opacity: 0;
-      animation: bq-cap 1s ease forwards;
-      animation-delay: 2.3s;
-    }
-
-    @keyframes bq-cap {
-      to { opacity: 1; }
-    }
-
-    /* Letter */
-    .letter {
-      text-align: left;
-    }
-
-    .section-heading {
-      font-family: var(--serif);
-      font-size: 1.7rem;
-      text-align: center;
-      margin-bottom: 6px;
-    }
-
-    .section-sub {
-      text-align: center;
-      color: var(--text-muted);
-      font-size: 0.8rem;
-      margin-bottom: 34px;
-    }
-
-    .letter-body {
-      background: var(--panel);
-      border: 1px solid var(--border);
-      border-radius: 4px;
-      padding: 30px 26px;
-      font-size: 0.98rem;
-      line-height: 1.85;
-      color: var(--text);
-    }
-
-    .letter-body p {
-      margin: 0 0 16px;
-    }
-
-    .letter-body p:last-child {
-      margin-bottom: 0;
-    }
-
-    .signature {
-      margin-top: 20px;
-      text-align: right;
-      font-family: var(--serif);
-      font-style: italic;
-      color: var(--accent);
-      font-size: 1.1rem;
-    }
-
-    /* Music */
-    .player {
-      background: var(--panel);
-      border: 1px solid var(--border);
-      border-radius: 4px;
-      padding: 24px;
-    }
-
-    .now-playing {
-      display: flex;
-      align-items: center;
-      gap: 14px;
-      text-align: left;
-      margin-bottom: 18px;
-    }
-
-    .vinyl {
-      width: 52px;
-      height: 52px;
-      border-radius: 50%;
-      background: radial-gradient(circle at 50% 50%, var(--bg) 0 8px, var(--accent) 9px 10px, #2a2618 11px 22px, var(--bg) 23px 26px);
-      flex-shrink: 0;
-      transition: transform 6s linear;
-    }
-
-    .vinyl.spin {
-      animation: spin 6s linear infinite;
-    }
-
-    @keyframes spin {
-      to { transform: rotate(360deg); }
-    }
-
-    .track-title {
-      font-family: var(--serif);
-      font-size: 1.15rem;
-    }
-
-    .track-artist {
-      color: var(--text-muted);
-      font-size: 0.78rem;
-      margin-top: 2px;
-    }
-
-    .progress-row {
-      display: flex;
-      align-items: center;
-      gap: 10px;
-      margin-bottom: 20px;
-    }
-
-    .progress-bar {
-      flex: 1;
-      height: 3px;
-      background: var(--border);
-      border-radius: 3px;
-      position: relative;
-      cursor: pointer;
-    }
-
-    .progress-fill {
-      position: absolute;
-      left: 0;
-      top: 0;
-      bottom: 0;
-      width: 0%;
-      background: var(--accent);
-      border-radius: 3px;
-    }
-
-    .time {
-      font-size: 0.7rem;
-      color: var(--text-muted);
-      min-width: 32px;
-    }
-
-    .controls {
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      gap: 26px;
-    }
-
-    .ctrl-btn {
-      background: none;
-      border: none;
-      color: var(--text);
-      cursor: pointer;
-      font-family: var(--sans);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      padding: 6px;
-    }
-
-    .ctrl-btn svg {
-      width: 18px;
-      height: 18px;
-      fill: currentColor;
-    }
-
-    .play-btn {
-      width: 46px;
-      height: 46px;
-      border-radius: 50%;
-      background: var(--accent);
-      color: var(--bg);
-    }
-
-    .play-btn svg {
-      width: 16px;
-      height: 16px;
-    }
-
-    .tracklist {
-      margin-top: 22px;
-      text-align: left;
-    }
-
-    .track-row {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      padding: 10px 4px;
-      border-bottom: 1px solid var(--border);
-      font-size: 0.85rem;
-      cursor: pointer;
-      color: var(--text-muted);
-    }
-
-    .track-row:last-child {
-      border-bottom: none;
-    }
-
-    .track-row.active {
-      color: var(--accent);
-    }
-
-    .track-row span.artist {
-      font-size: 0.72rem;
-    }
-
-    /* Jar */
-    .jar-wrap {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-    }
-
-    .jar-svg {
-      width: 120px;
-      height: auto;
-      margin-bottom: 6px;
-    }
-
-    .jar-svg.shaking {
-      animation: jarshake 0.5s;
-    }
-
-    @keyframes jarshake {
-      0%, 100% { transform: rotate(0); }
-      20% { transform: rotate(-6deg); }
-      40% { transform: rotate(5deg); }
-      60% { transform: rotate(-4deg); }
-      80% { transform: rotate(3deg); }
-    }
-
-    .shake-btn {
-      margin-top: 16px;
-      background: transparent;
-      border: 1px solid var(--accent);
-      color: var(--accent);
-      font-family: var(--sans);
-      font-size: 0.85rem;
-      letter-spacing: 0.02em;
-      padding: 12px 26px;
-      border-radius: 999px;
-      cursor: pointer;
-      transition: background 0.2s ease, color 0.2s ease;
-    }
-
-    .shake-btn:hover {
-      background: var(--accent);
-      color: var(--bg);
-    }
-
-    .note-card {
-      margin-top: 24px;
-      background: var(--panel);
-      border: 1px solid var(--border);
-      border-radius: 4px;
-      padding: 26px 22px;
-      min-height: 60px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      text-align: center;
-      opacity: 0;
-      transform: translateY(6px);
-      transition: opacity 0.4s ease, transform 0.4s ease;
-    }
-
-    .note-card.show {
-      opacity: 1;
-      transform: translateY(0);
-    }
-
-    .note-number {
-      color: var(--accent);
-      font-family: var(--serif);
-      font-style: italic;
-      font-size: 0.85rem;
-      display: block;
-      margin-bottom: 8px;
-    }
-
-    .note-text {
-      font-family: var(--serif);
-      font-size: 1.15rem;
-      line-height: 1.5;
-    }
-
-    footer {
-      text-align: center;
-      padding: 50px 32px 60px;
-      color: var(--text-muted);
-      font-size: 0.72rem;
-      letter-spacing: 0.02em;
-    }
-
-    .toast {
-      position: fixed;
-      bottom: 24px;
-      left: 50%;
-      transform: translate(-50%, 20px);
-      background: var(--panel);
-      border: 1px solid var(--border);
-      color: var(--text);
-      padding: 12px 20px;
-      border-radius: 999px;
-      font-size: 0.78rem;
-      opacity: 0;
-      transition: opacity 0.3s ease, transform 0.3s ease;
-      z-index: 100;
-      pointer-events: none;
-    }
-
-    .toast.show {
-      opacity: 1;
-      transform: translate(-50%, 0);
-    }
-
-    @media (prefers-reduced-motion: reduce) {
-      * {
-        animation: none !important;
-        transition: none !important;
-      }
-      .stem, .leaf, .flower, .spark, .bouquet-caption {
-        opacity: 1 !important;
-        transform: none !important;
-        stroke-dashoffset: 0 !important;
-      }
-    }
-  </style>
 </head>
 <body>
 
@@ -720,7 +16,7 @@
 
   <div id="lock-screen">
     <div class="lock-card">
-      <div class="ornament">💌</div>
+      <div class="ornament">😊</div>
       <div class="lock-title">Untuk Kamu</div>
       <div class="lock-sub">Masukkan kode rahasia untuk membuka</div>
       <div class="dots" id="dots">
@@ -743,11 +39,13 @@
         <button class="key" data-num="0">0</button>
         <button class="key haunt" id="enterBtn">↵</button>
       </div>
-      <div class="hint">Petunjuk: <b>2610</b> 💘</div>
+      <div class="hint">Petunjuk: <b>2610</b> 🔑</div>
     </div>
   </div>
 
   <div id="site">
+
+    <div id="fullscreen-confetti-container"></div>
 
     <section class="hero">
       <div class="eyebrow-icon">🕯️</div>
@@ -756,6 +54,31 @@
       <div class="divider"></div>
       <p class="hero-quote">"Semoga bahagia, sehat selalu, dan semua mimpimu perlahan jadi nyata."</p>
     </section>
+
+    <div class="cake-container">
+      <!-- Kontainer Partikel Letupan -->
+        <div id="particle-container"></div>
+
+        <div class="cake">
+            <!-- 3 Lilin di atas kue -->
+            <div class="candles-wrapper">
+                <div class="candle" onclick="extinguish(this, event)">
+                    <div class="flame"></div>
+                </div>
+                <div class="candle" onclick="extinguish(this, event)">
+                    <div class="flame"></div>
+                </div>
+                <div class="candle" onclick="extinguish(this, event)">
+                    <div class="flame"></div>
+                </div>
+            </div>
+          <!-- Lapisan Kue -->
+          <div class="top-layer"></div>
+          <div class="middle-layer"></div>
+          <div class="bottom-layer"></div>
+      </div>
+      <p id="cake-instruction">Ketuk lilin untuk memadamkannya! 🎂</p>
+    </div>
 
     <!-- BUKET BUNGA FIX PRESISI KELOPAK DENGAN BATANG -->
     <section class="flowers">
@@ -817,21 +140,61 @@
             <circle cx="0" cy="0" r="3.5" fill="#1e1c15"/>
           </g>
         </svg>
-        <div class="bouquet-caption">Bunga UntukMu (^///^)</div>
+        <div class="bouquet-caption">Hehe Bunga Virtual (●'◡'●)</div>
       </div>
     </section>
 
     <section class="letter">
-      <h2 class="section-heading" style="text-align:center;">Surat Kecil Nih</h2>
+      <h2 class="section-heading" style="text-align:center;">Surat Kecil</h2>
       <p class="section-sub">Dari Aku UntukMu</p>
       <div class="letter-body">
-        <p>Halo, Kamu.</p>
-        <p>Yey udah makin tua aja nih, seneng ya bisa kenal kamu, semoga hari mu tidak seburuk kemarin yg keliatan melelahkan, jangan terlalu memikirkan masalah yg udah lewat, jalani hidup mu yg sekarang ya</p>
-        <p>jaga kesehatan, jangan sering bergadang yaa, semoga kamu happy ya sekarang, jangan sampe nangis lagi, aku selalu disini kok tenang aja kalo kamu butuh<p>
-        <p>jangan lupa olahraga, upgrade dirimu, kamu bisa lewatin itu semua, inget kamu punya tuhan juga yg selalu jaga kamu</p>
-        <div class="signature">— Orang Yg Pernah Singgah</div>
+        <p>Halo Ca.</p>
+        <p>asek udah makin tua aja nih, seneng ya bisa kenal kamu, semoga hari mu tidak seburuk kemarin yg keliatan melelahkan, jangan terlalu memikirkan masalah yg udah lewat, jalani hidup mu yg sekarang ya</p>
+        <p>jaga kesehatan, jangan sering bergadang nanti sakit baru tau, semoga kamu happy dengan hidupmu sekarang, jangan sampe nangis lagi, aku disini kok tenang aja kalo kamu butuh<p>
+        <p>jangan lupa olahraga, upgrade dirimu, kamu bisa lewatin itu semua, inget kamu punya Allah SWT juga yg selalu jaga kamu, kurangi marah marahnya, cepet tua nanti</p>
+        <div class="signature">— Raka</div>
       </div>
     </section>
+
+    <section class="letter">
+      <h2 class="section-heading" style="text-align:center;">Surat Kecil</h2>
+      <p class="section-sub">From My Innerchild For You</p>
+      <div class="letter-body">
+        <p>Hola Caca🖐️</p>
+        <p>Selamat Ultah yaaa, Semoga Panjang Umur, Jaga dirimu, jangan gegara mati rasa jadi lupa diri sendiri, jangan no no ya caca, oiya makasi juga kenyamanan sementaranya, makasi juga sakit nya hihi</p>
+        <p>padahal kalo kamu berusaha aku bisa aja luluh, kayak yang amin lakuin ke aku, dia tetep ngajak aku main, tanpa mikirin gengsi dia,
+           ya dia juga ga tau si aku ngambek, cuma ya debat hebat gitu dia tau lah aku pasti males di ajak bicara pasti, tapi dia tetep kekeh mau bicara sama aku, gitu aja aku bisa luluh loh, apalagi di perhatiin<p>
+        <p>kalo kamu emang pengen balik, tunjukin aku cuma perlu bukti , bukan menjauh trus, dari lama udah kubilang kan? aku butuh bukti nya, dan kamu ga pernah ngasi bukti itu sama sekali, aku udah berusaha ngejar kamu, 
+           kamu nya?? malah ngatain, gimana ga sakit hati coba, kalo dari awal emang mau berprilaku layaknya temen yaudah ngomong, jangan ngasi harapan kecil, kamu tau kan anak kecil kalo di tawarin permen aja langsung seneng
+           padahal blm pasti tuh di kasi permennya, ya sama aku juga ngerasa gitu, jadikan pelajaran ya ca, kalo ada orang baru yang singgah ke kamu, jangan kamu perlakukan kayak aku, cukup di aku aja yang kamu giniin oke??
+           sekali lagi selamat ulang tahun caca, happy selalu🥰</p>
+        <div class="signature">— Tata</div>
+      </div>
+    </section>
+
+    <div class="polaroid-container">
+        <!-- Kartu Polaroid -->
+        <div class="polaroid-card" onclick="revealPhoto(this)">
+            
+            <!-- Foto Asli di Dalam & Caption -->
+            <div class="polaroid-img-wrapper">
+                <img src="foto.jpg" alt="Foto Kenangan" class="polaroid-photo">
+                <div class="polaroid-caption">
+                    <h3>Kata kata Terakhir Tata</h3>
+                    <p>"Semoga kamu mendapatkan yang lebih baik"</p>
+                </div>
+            </div>
+
+            <!-- Cover Penutup (Yang bisa diklik untuk membuka foto) -->
+            <div class="polaroid-cover" id="photoCover">
+                <div class="cover-content">
+                    <div class="camera-icon">📷</div>
+                    <span>Ketuk untuk mengungkap</span>
+                </div>
+            </div>
+
+        </div>
+    </div>
 
     <section class="music">
       <h2 class="section-heading">Lagu untuk Hari Ini</h2>
@@ -912,303 +275,7 @@
 <!-- Load Three.js dari CDN -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
 
-<script>
+<script src="script.js"></script>
 
-  // Jumlah partikel disesuaikan agar ringan di area kecil
-  const PARTICLE_COUNT = 3000;
-
-  // Function Posisi Uranus Milikmu
-  function getUranusPositions() {
-    const pos = new Float32Array(PARTICLE_COUNT * 3);
-    for (let i = 0; i < PARTICLE_COUNT; i++) {
-      if (i < PARTICLE_COUNT * 0.45) {
-        const u = Math.random() * Math.PI * 2;
-        const v = Math.random() * Math.PI;
-        const r = 2.5;
-        pos[i * 3] = r * Math.sin(v) * Math.cos(u);
-        pos[i * 3 + 1] = r * Math.sin(v) * Math.sin(u);
-        pos[i * 3 + 2] = r * Math.cos(v);
-      } else {
-        const theta = Math.random() * Math.PI * 2;
-        const r = 3.8 + Math.random() * 2.8;
-        pos[i * 3] = r * Math.cos(theta);
-        pos[i * 3 + 1] = (Math.random() - 0.5) * 0.25;
-        pos[i * 3 + 2] = r * Math.sin(theta);
-      }
-    }
-    return pos;
-  }
-
-  // Function Warna Uranus Milikmu
-  function getUranusColors() {
-    const col = new Float32Array(PARTICLE_COUNT * 3);
-    for (let i = 0; i < PARTICLE_COUNT; i++) {
-      if (i < PARTICLE_COUNT * 0.45) {
-        col[i * 3] = 0.35 + Math.random() * 0.15;
-        col[i * 3 + 1] = 0.85 + Math.random() * 0.15;
-        col[i * 3 + 2] = 0.9 + Math.random() * 0.1;
-      } else {
-        col[i * 3] = 0.25 + Math.random() * 0.15;
-        col[i * 3 + 1] = 0.75 + Math.random() * 0.2;
-        col[i * 3 + 2] = 0.85 + Math.random() * 0.15;
-      }
-    }
-    return col;
-  }
-
-  // --- Setup Scene Three.js ---
-  const container = document.getElementById('uranus-container');
-  const canvas = document.getElementById('uranusCanvas');
-
-  const scene = new THREE.Scene();
-  const camera = new THREE.PerspectiveCamera(45, 1, 0.1, 1000);
-  camera.position.z = 16; // Jarak kamera ke planet
-
-  const renderer = new THREE.WebGLRenderer({ canvas: canvas, alpha: true, antialias: true });
-  renderer.setSize(200, 200);
-  renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
-
-  // Buat Geometri Partikel
-  const geometry = new THREE.BufferGeometry();
-  geometry.setAttribute('position', new THREE.BufferAttribute(getUranusPositions(), 3));
-  geometry.setAttribute('color', new THREE.BufferAttribute(getUranusColors(), 3));
-
-  // Material Partikel Glow Cyan
-  const material = new THREE.PointsMaterial({
-    size: 0.12,
-    vertexColors: true,
-    transparent: true,
-    opacity: 0.85,
-    blending: THREE.AdditiveBlending
-  });
-
-  const uranusParticles = new THREE.Points(geometry, material);
-  
-  // Kemiringan Khas Cincin Uranus (Cincin Hampir Vertikal)
-  uranusParticles.rotation.z = Math.PI / 4; 
-  scene.add(uranusParticles);
-
-  // Animation Loop (Rotasi Pelan)
-  function animate() {
-    requestAnimationFrame(animate);
-    uranusParticles.rotation.y += 0.005; // Rotasi planet & cincin
-    renderer.render(scene, camera);
-  }
-
-  animate();
-
-  const SECRET_CODE = "2610";
-
-  const TRACKS = [
-    { title: "Shape of My Heart", artist: "Backstreet Boys", src: "smh.mp3" },
-    { title: "About You", artist: "The 1975", src: "about.mp3" },
-    { title: "Jatuh Cinta Lagi", artist: "Nadhif Basalamah", src: "jcl.mp3" }
-  ];
-
-  const NOTES = [
-    "Kamu Punya sisi yg ga di tau orang, Dan selalu bisa tersenyum disaat itu",
-    "Kamu Punya Cara sendiri untuk menjadi diri kamu yg sekarang",
-    "Kamu Layak Di Rayakan, Walau sekecil apapun itu",
-    "Terima kasih Udah Pernah Singgah, walau rasanya kayak cepet gitu",
-    "Dan aku harap, Ini semua bisa jadi pelajaran masing-masing :)"
-  ];
-
-  const dotsEl = document.getElementById('dots');
-  const dots = dotsEl.querySelectorAll('.dot');
-  const keypad = document.getElementById('keypad');
-  const lockScreen = document.getElementById('lock-screen');
-  const site = document.getElementById('site');
-  let entered = "";
-
-  function updateDots() {
-    dots.forEach((d, i) => d.classList.toggle('filled', i < entered.length));
-  }
-
-  function tryUnlock() {
-    if (entered === SECRET_CODE) {
-      lockScreen.classList.add('hidden');
-      document.body.style.overflow = 'auto';
-      setTimeout(() => site.classList.add('visible'), 200);
-      playAudio();
-    } else {
-      dotsEl.classList.add('error');
-      dotsEl.classList.add('shake');
-      setTimeout(() => {
-        dotsEl.classList.remove('shake', 'error');
-        entered = "";
-        updateDots();
-      }, 500);
-    }
-  }
-
-  document.body.style.overflow = 'hidden';
-
-  keypad.addEventListener('click', (e) => {
-    const btn = e.target.closest('.key');
-    if (!btn) return;
-    if (btn.id === 'clearBtn') {
-      entered = entered.slice(0, -1);
-      updateDots();
-      return;
-    }
-    if (btn.id === 'enterBtn') {
-      tryUnlock();
-      return;
-    }
-    const num = btn.dataset.num;
-    if (num !== undefined && entered.length < 6) {
-      entered += num;
-      updateDots();
-      if (entered.length === 6) setTimeout(tryUnlock, 150);
-    }
-  });
-
-  const sections = document.querySelectorAll('#site section');
-  const observer = new IntersectionObserver((entries) => {
-    entries.forEach(entry => {
-      if (entry.isIntersecting) entry.target.classList.add('in-view');
-    });
-  }, { threshold: 0.15 });
-
-  sections.forEach(s => observer.observe(s));
-
-  const toastEl = document.getElementById('toast');
-  let toastTimer;
-
-  function showToast(msg) {
-    toastEl.textContent = msg;
-    toastEl.classList.add('show');
-    clearTimeout(toastTimer);
-    toastTimer = setTimeout(() => toastEl.classList.remove('show'), 2200);
-  }
-
-  const audio = document.getElementById('audio');
-  const playBtn = document.getElementById('playBtn');
-  const playIcon = document.getElementById('playIcon');
-  const vinyl = document.getElementById('vinyl');
-  const trackTitle = document.getElementById('trackTitle');
-  const trackArtist = document.getElementById('trackArtist');
-  const progressFill = document.getElementById('progressFill');
-  const progressBar = document.getElementById('progressBar');
-  const curTime = document.getElementById('curTime');
-  const durTime = document.getElementById('durTime');
-  const tracklistEl = document.getElementById('tracklist');
-
-  let currentTrack = 0;
-  let isPlaying = false;
-
-  function formatTime(s) {
-    if (!isFinite(s)) return "0:00";
-    const m = Math.floor(s / 60);
-    const sec = Math.floor(s % 60).toString().padStart(2, '0');
-    return `${m}:${sec}`;
-  }
-
-  function renderTracklist() {
-    tracklistEl.innerHTML = "";
-    TRACKS.forEach((t, i) => {
-      const row = document.createElement('div');
-      row.className = 'track-row' + (i === currentTrack ? ' active' : '');
-      row.innerHTML = `<span>${t.title}</span><span class="artist">${t.artist}</span>`;
-      row.addEventListener('click', () => loadTrack(i, true));
-      tracklistEl.appendChild(row);
-    });
-  }
-
-  function loadTrack(i, autoplay) {
-    currentTrack = (i + TRACKS.length) % TRACKS.length;
-    const t = TRACKS[currentTrack];
-    trackTitle.textContent = t.title;
-    trackArtist.textContent = t.artist;
-    progressFill.style.width = "0%";
-    curTime.textContent = "0:00";
-    durTime.textContent = "0:00";
-    renderTracklist();
-    if (t.src) {
-      audio.src = t.src;
-      if (autoplay) playAudio();
-    } else if (autoplay) {
-      showToast("Tambahkan file lagu (src) di bagian TRACKS pada kode ✨");
-    }
-  }
-
-  function playAudio() {
-    const t = TRACKS[currentTrack];
-    if (!t.src) {
-      showToast("Tambahkan file lagu (src) di bagian TRACKS pada kode ✨");
-      return;
-    }
-    audio.play();
-  }
-
-  playBtn.addEventListener('click', () => {
-    if (isPlaying) {
-      audio.pause();
-    } else {
-      playAudio();
-    }
-  });
-
-  audio.addEventListener('play', () => {
-    isPlaying = true;
-    playIcon.innerHTML = '<path d="M6 5h4v14H6zm8 0h4v14h-4z"/>';
-    vinyl.classList.add('spin');
-  });
-
-  audio.addEventListener('pause', () => {
-    isPlaying = false;
-    playIcon.innerHTML = '<path d="M8 5v14l11-7z"/>';
-    vinyl.classList.remove('spin');
-  });
-
-  audio.addEventListener('timeupdate', () => {
-    if (audio.duration) {
-      progressFill.style.width = (audio.currentTime / audio.duration * 100) + "%";
-      curTime.textContent = formatTime(audio.currentTime);
-    }
-  });
-
-  audio.addEventListener('loadedmetadata', () => {
-    durTime.textContent = formatTime(audio.duration);
-  });
-
-  audio.addEventListener('ended', () => loadTrack(currentTrack + 1, true));
-
-  progressBar.addEventListener('click', (e) => {
-    if (!audio.duration) return;
-    const rect = progressBar.getBoundingClientRect();
-    const pct = (e.clientX - rect.left) / rect.width;
-    audio.currentTime = pct * audio.duration;
-  });
-
-  document.getElementById('prevBtn').addEventListener('click', () => loadTrack(currentTrack - 1, isPlaying));
-  document.getElementById('nextBtn').addEventListener('click', () => loadTrack(currentTrack + 1, isPlaying));
-
-  loadTrack(0, false);
-
-  const jarSvg = document.getElementById('jarSvg');
-  const shakeBtn = document.getElementById('shakeBtn');
-  const noteCard = document.getElementById('noteCard');
-  const noteNumber = document.getElementById('noteNumber');
-  const noteText = document.getElementById('noteText');
-  let lastNote = -1;
-
-  shakeBtn.addEventListener('click', () => {
-    jarSvg.classList.remove('shaking');
-    void jarSvg.offsetWidth;
-    jarSvg.classList.add('shaking');
-    noteCard.classList.remove('show');
-    setTimeout(() => {
-      let idx;
-      do {
-        idx = Math.floor(Math.random() * NOTES.length);
-      } while (idx === lastNote && NOTES.length > 1);
-      lastNote = idx;
-      noteNumber.textContent = `#${idx + 1}`;
-      noteText.textContent = NOTES[idx];
-      noteCard.classList.add('show');
-    }, 350);
-  });
-</script>
 </body>
 </html>
