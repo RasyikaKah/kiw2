@@ -1034,3 +1034,33 @@
         0% { transform: translateY(0); }
         100% { transform: translateY(-6px); }
     }
+    /* FIX SPACING KHUSUS HP */
+    @media (max-width: 600px) {
+      .hero {
+        padding-top: 48px;
+      }
+
+      .divider {
+        margin: 16px auto;
+      }
+
+      .cake-container {
+        margin: 20px auto;
+      }
+
+      .flowers {
+        padding: 0 20px;
+      }
+
+      .bouquet-svg {
+        width: 160px;
+      }
+
+      .bouquet-caption {
+        margin-top: 8px;
+      }
+
+      .section-sub {
+        margin-bottom: 20px;
+      }
+    }
